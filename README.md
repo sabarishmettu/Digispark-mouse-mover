@@ -1,8 +1,8 @@
-# Digispark HID Mouse Mover
+# Digispark HID Mouse Mover ∞
 
-A simple Digispark sketch that moves the mouse cursor randomly to **prevent the computer from sleeping or activating the screensaver** — no clicks, just cursor movement.
+Moves the mouse cursor in a smooth **infinity (∞) shape** to prevent the computer from sleeping or activating the screensaver — no clicks, just smooth cursor movement.
 
-Plug it in and it works instantly. The host PC sees it as a generic **HID mouse** — no drivers needed, no "Digispark" name visible in Device Manager.
+Uses **sub-pixel accumulation** for real mouse-like smoothness. Plug it in and it works instantly. The host PC sees it as a generic **HID mouse** — no drivers needed, no "Digispark" name visible in Device Manager.
 
 ---
 
@@ -55,20 +55,23 @@ Download and run `DPinst64.exe` from the [Digistump releases page](https://githu
 
 ## Configuration
 
-You can tweak these values at the top of the sketch:
+Tweak these values at the top of the sketch:
 
 | Setting | Default | Description |
 |---|---|---|
-| `MOVE_INTERVAL` | `2000` | Milliseconds between movements |
-| `MOVE_RANGE` | `20` | Max pixels to move in any direction |
+| `STEPS` | `200` | Higher = smoother movement |
+| `RADIUS` | `10` | Size of the infinity shape in pixels |
+| `STEP_DELAY` | `15` | ms per step — lower is faster |
 
 ---
 
 ## How It Works
 
-- Every `MOVE_INTERVAL` ms the cursor moves a small pseudo-random amount
-- Uses `millis()` for varied X/Y offsets — no extra libraries needed
-- No mouse clicks are ever sent
+- Traces the **Lemniscate of Bernoulli** — the real mathematical infinity shape
+- **Sub-pixel accumulator** saves fractional movements so nothing is lost — feels like a real mouse
+- Only sends HID updates when there is actual movement — clean signal
+- ~60 updates/second matches real mouse polling rate
+- No clicks ever sent
 - Enumerates as a standard **HID-compliant mouse** — invisible to the host OS
 
 ---
